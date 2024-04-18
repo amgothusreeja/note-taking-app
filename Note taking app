@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes Application</title>
+    <!-- Add your CSS styles here -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        #notes-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .note {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .note textarea {
+            width: 100%;
+            border: none;
+            resize: none;
+            overflow: hidden;
+        }
+
+        .note-actions {
+            margin-top: 10px;
+        }
+
+        .note-actions button {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="notes-container">
+    <h1>Notes Application</h1>
+
+    <!-- Add Note Form -->
+    <div>
+        <textarea id="new-note" placeholder="Enter your note"></textarea>
+        <div class="note-actions">
+            <button onclick="addNote()">Add Note</button>
+        </div>
+    </div>
+
+    <!-- List of Notes -->
+    <div id="notes-list"></div>
+
+</div>
+
+<!-- Add your JavaScript code here -->
+<script>
+    function addNote() {
+        const noteText = document.getElementById('new-note').value;
+        if (noteText.trim() !== '') {
+            const noteContainer = document.getElementById('notes-list');
+            const noteDiv = document.createElement('div');
+            noteDiv.className = 'note';
+            noteDiv.innerHTML = `<textarea readonly>${noteText}</textarea>
+                                 <div class="note-actions">
+                                     <button onclick="editNote(this)">Edit</button>
+                                     <button onclick="deleteNote(this)">Delete</button>
+                                 </div>`;
+            noteContainer.appendChild(noteDiv);
+            document.getElementById('new-note').value = '';
+        }
+    }
+
+    function editNote(button) {
+        const noteDiv = button.closest('.note');
+        const textarea = noteDiv.querySelector('textarea');
+        textarea.readOnly = !textarea.readOnly;
+
+        if (!textarea.readOnly) {
+            textarea.focus();
+        }
+    }
+
+    function deleteNote(button) {
+        const noteDiv = button.closest('.note');
+        noteDiv.remove();
+    }
+</script>
+
+</body>
+</html>
